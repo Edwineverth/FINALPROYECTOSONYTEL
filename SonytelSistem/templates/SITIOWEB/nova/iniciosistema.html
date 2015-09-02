@@ -1,0 +1,36 @@
+{% extends "SITIOWEB/nova/index.html" %}
+{% block content %}
+    
+
+    <section id="title" class="emerald">
+       
+           
+                <div class="col-sm-5">
+                    <h1>INICIAR DE SESIÓN</h1>
+                 </div>
+              
+        
+    </section><!--/#title-->     
+   
+
+<section id="registration" class="container">
+       		
+            <form class="center"  method="POST" id="form-login">{% csrf_token %}
+                <fieldset class="registration-form">
+                    <div class="form-group">
+                        <input type="text" id="username" name="username" placeholder="Usuario" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" placeholder="Contraseña" class="form-control">
+                    </div>
+                    <div class="form-group">
+                         <button type="submit" class="btn btn-primary">INICIAR SESIÓN</button>
+                    </div>
+                </fieldset>
+            </form>
+       
+    </section><!--/#registration-->
+    
+{% endblock content %}
+
+    

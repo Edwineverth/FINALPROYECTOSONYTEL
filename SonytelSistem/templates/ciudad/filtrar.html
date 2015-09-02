@@ -1,0 +1,74 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="well">
+		<h1>REPORTE CLIENTE</h1>
+          <div class="btn-toolbar" role="toolbar">
+              <div class="btn-group" role="group">
+                <a href="{% url 'registrar_cliente'  %}">
+                <button name="btninsertar" type="button" class="btn btn-default" id="btninsertar">INSERTAR</button>
+                </a>
+                
+                <a href="{% url 'registrar_cliente'  %}">
+				<button type="button" class="btn btn-default">ACTUALIZAR</button>
+                </a>
+                <a href="{% url 'registrar_cliente'  %}">
+                <button type="button" class="btn btn-default">ELIMINAR</button>
+               	</a>
+                <a href="{% url 'registrar_cliente'  %}">
+                <button type="button" class="btn btn-default">REPORTE</button>
+                <a href="{% url 'registrar_cliente'  %}">
+                <button type="button" class="btn btn-default">IMPRIMIR</button>
+              	</a>
+              </div>
+              
+      </div>
+<p>&nbsp;</p>
+<form method="POST" action="/cliente/buscar/">
+  {% csrf_token %}
+  <div class="col-lg-6" >
+			      <div class="input-group">
+			        <input type="text" value="buscar" class="form-control" placeholder="Ingrese el cliente a buscar" name="buscalo">
+			        <span class="input-group-btn">
+			          <button class="btn btn-default" type="submit" >Buscar</button>
+			        </span></div>
+			      <!-- /input-group -->
+			  </div>    	
+	    </form>
+
+	    <!-- /.col-lg-6 -->
+	    </br>
+	    <br/>
+	</div>
+<div id="datos">
+	
+</div>
+
+{% endblock content %}
+
+{% block js %}
+	
+<script>
+		$('input').on('keypress',filtrado);
+		function filtrado(){
+			var nombre = $(this).val();
+			console.log(nombre);
+			$.ajax({
+				data:{'nombre':nombre},
+				url:'/ciudad/filtrador/',
+				type: 'get',
+
+				success: function(data){
+					var html = '<div class="table-responsive"><table class="table table-hover"><thead><tr><td class="success">NOMBRE</td><td class="success">DESCRIPCION</td></tr></thead><tbody >'
+					for(var i = 0; i<data.length ; i++){
+						html += '<tr><td >'+data[i].fields.ciu_nombre+'</td><td >'+data[i].fields.ciu_descripcion+'</td></tr>'
+					}
+					var uni= '</tbody></table></div>'
+					$('#datos').html(html+uni);
+				}
+			});
+	
+		}
+
+	</script>	
+{% endblock js %}

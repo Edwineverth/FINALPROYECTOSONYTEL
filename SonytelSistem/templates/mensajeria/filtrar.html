@@ -1,0 +1,130 @@
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../../css/bootstrap.css" rel="stylesheet" type="text/css">
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="well col-md-offset-2 col-md-7" >
+<div class="alert alert-success" role="alert"><h3>GESTIONAR MENSAJERIA </h3></div>
+</div>
+<div class="well col-md-offset-2 col-md-7" >
+<p>Mensajes emitidos por los usuarios del sistema </p>
+
+
+<div class="row">
+  <div class="col-md-offset-7 col-md-6">
+  		<button type="button" class="btn btn-success btn-sm" onclick="ingresarP()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> INGRESAR</button>
+		
+  </div>
+</div>
+<br/>
+  <input type="search" id="txtBuscar" class=" pull-right form-control" autofocus placeholder="Buscar...">
+
+    </br>
+    <br/>
+    </br>
+    <br/>
+      	
+      <div id="divTabla" class="table-responsive">
+        <table id = "tblTabla" class="table table-hover">
+        <thead>
+        <tr>
+            <td class="success">#</td>
+            <td class="success">NOMBRE</td>
+            <td class="success">DESCRIPCIÓN</td>
+            <td class="success">CLIENTE</td>
+            <td class="success">------</td>
+            <td class="success">------</td>
+        </tr>
+        </thead>
+        <tbody >
+            <!-- Aplicadas en las celdas (<td> o <th>) -->
+            {% for mensaje in mensajerias %}
+            <tr>
+            <td >{{mensaje.id}}</td>
+            <td >{{mensaje.men_asunto}}</td>
+            <td >{{mensaje.men_descripcion}}</td>
+            <td >{{mensaje.cli}}</td>
+            <td ><button class='btn btn-success' id="btnupdate{{mensaje.id}}" value="{{mensaje.id}}" onclick='actualizarDatos({{mensaje.id}})'><span class="glyphicon glyphicon-pencil"></i></button></td>
+            <td ><button class='btn btn-success' id="btndelete" value="{{mensaje.id}}" onclick='eliminarDatos({{mensaje.id}})'><span class="glyphicon glyphicon-remove"></i></button></td>
+        </tr>
+        	{% endfor %}
+        </tbody>
+        
+        </table>
+      </div>
+      	<div id="datos">
+        
+      </div>
+</div>
+
+
+
+    
+
+{% endblock content %}
+
+{% block js %}
+	
+<script>
+		$('input').on('keypress',filtrado);
+		function filtrado(){
+			var nombre = $(this).val();
+			console.log(nombre);
+			$.ajax({
+				data:{'nombre':nombre},
+				url:'/mensajeria/filtrador/',
+				type: 'get',
+
+				success: function(data){
+					document.getElementById('tblTabla').style.display = 'none'
+					var ident = ''
+					var cliente = ''
+					var html = '<div class="table-responsive"><table class="table table-hover"><thead><tr><td class="success">#</td><td class="success">NOMBRE</td><td class="success">DESCRIPCION</td><td class="success">CLIENTE</td><td class="success">------</td><td class="success">------</td></tr></thead><tbody >'
+					for(var i = 0; i<data.length ; i++){
+
+						{% for mensaje in mensajerias  %}
+							if ('{{mensaje.men_nombre}}'==data[i].fields.men_nombre) {
+
+								ident = '{{mensaje.id}}';
+								cliente = '{{mensaje.cli}}'
+
+							};
+						{%endfor%}
+						
+						html += '<tr><td >'+ident+'</td><td >'+data[i].fields.men_asunto+'</td><td >'+data[i].fields.men_descripcion+'</td><td >'+cliente+'</td>'
+						
+
+						var botones = "<td ><button class='btn btn-success' id='btnupdate"+ident+"' value="+ident+" onclick='actualizarDatos("+ident+")'><span class='glyphicon glyphicon-pencil'></i></button> </td><td ><button class='btn btn-success' id='btndelete' value="+ident+" onclick='eliminarDatos("+ident+")'><span class='glyphicon glyphicon-remove'></i></button></td></tr></tr>";
+						html +=botones;
+					}
+					var uni= '</tbody></table></div>'
+					$('#datos').html(html+uni);
+				}
+			});
+	
+		}
+	function actualizarDatos(r){
+		var s = document.getElementById('btnupdate'+r).value
+		setTimeout("location.href='/mensajeria/editar/"+r+"'"+"",10);
+
+	}
+	function eliminarDatos(r){
+		var s = document.getElementById('btnupdate'+r).value
+		setTimeout("location.href='/mensajeria/eliminar/"+r+"'"+"",10);
+
+	}
+	function ingresarP(){
+
+		setTimeout("location.href='/mensajeria/registrar'",10)
+	}
+
+
+	</script>	
+{% endblock js %}

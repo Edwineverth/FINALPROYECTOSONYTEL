@@ -1,0 +1,76 @@
+/*@media (min-width: 1200px) {
+        body {color: red;}
+    }
+    @media (min-width: 768px) and (max-width: 979px) {
+        body {color: green;}
+    }
+    @media (max-width: 767px) {
+         body {color: blue;}
+    }
+    @media (max-width: 480px) {
+         body {color: yellow;}
+    }*/
+body{
+    margin: 80px 100px 75px 100px;
+}
+
+
+.navbar-inner{
+	font-size: 11px;
+	text-align: center;
+}
+	
+.text-big{
+	font-size: 100px;
+
+	/*line-height: 50px;*/
+
+}
+
+.text-small{
+    font-size: 25px;
+    line-height: 30px;
+    padding: 5px 20px 5px 20px;
+}
+
+.text-medium{
+    font-size: 45px;
+    line-height: 40px;
+    padding: 15px 30px 15px 30px;
+}
+
+a{
+	color: white;
+    line-height: 60px;
+}
+
+.add-on{
+    border-width: 0px;
+}
+
+input.inputstyle {width: 140px;}
+
+div.panel{
+    border: double;
+}
+
+.form-inline{
+    align-content: center;
+}
+
+.btn{
+    border-width: 0px;
+}
+
+li{
+	font-size: 10px;
+	text-align: left;
+}
+
+.page
+{
+    width: 960px;
+    background-color: #fff;
+    margin: 50px auto 0px auto;
+}
+

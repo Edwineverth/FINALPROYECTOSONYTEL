@@ -1,0 +1,126 @@
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../../css/bootstrap.css" rel="stylesheet" type="text/css">
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="well col-md-offset-2 col-md-7" >
+<div class="alert alert-success" role="alert"><h3>GESTIONAR CATEGORIAS / MARCAS /TIPOS </h3></div>
+</div>
+<div class="well col-md-offset-2 col-md-7" >
+<p>Registro de productos emitidas </p>
+
+
+<div class="row">
+  <div class="col-md-offset-7 col-md-6">
+  		<button type="button" class="btn btn-success btn-sm" onclick="ingresarP()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> INGRESAR</button>
+		
+  </div>
+</div>
+<br/>
+  <input type="search" id="txtBuscar" class=" pull-right form-control" autofocus placeholder="Buscar...">
+
+    </br>
+    <br/>
+    </br>
+    <br/>
+      	
+      <div id="divTabla" class="table-responsive">
+        <table id = "tblTabla" class="table table-hover">
+        <thead>
+        <tr>
+            <td class="success">#</td>
+            <td class="success">NOMBRE</td>
+            <td class="success">DESCRIPCIÓN</td>
+            <td class="success">------</td>
+            <td class="success">------</td>
+        </tr>
+        </thead>
+        <tbody >
+            <!-- Aplicadas en las celdas (<td> o <th>) -->
+            {% for cate in categorias %}
+            <tr>
+            <td >{{cate.id}}</td>
+            <td >{{cate.mar_nombre}}</td>
+            <td >{{cate.mar_descripcion}}</td>
+            <td ><button class='btn btn-success' id="btnupdate{{cate.id}}" value="{{cate.id}}" onclick='actualizarDatos({{cate.id}})'><span class="glyphicon glyphicon-pencil"></i></button></td>
+            <td ><button class='btn btn-success' id="btndelete" value="{{cate.id}}" onclick='eliminarDatos({{cate.id}})'><span class="glyphicon glyphicon-remove"></i></button></td>
+        </tr>
+        	{% endfor %}
+        </tbody>
+        
+        </table>
+      </div>
+      	<div id="datos">
+        
+      </div>
+</div>
+
+
+
+    
+
+{% endblock content %}
+
+{% block js %}
+	
+<script>
+		$('input').on('keypress',filtrado);
+		function filtrado(){
+			var nombre = $(this).val();
+			console.log(nombre);
+			$.ajax({
+				data:{'nombre':nombre},
+				url:'/categoria/filtrador/',
+				type: 'get',
+
+				success: function(data){
+					document.getElementById('tblTabla').style.display = 'none'
+					var ident = ''
+					var html = '<div class="table-responsive"><table class="table table-hover"><thead><tr><td class="success">#</td><td class="success">NOMBRE</td><td class="success">DESCRIPCION</td><td class="success">------</td><td class="success">------</td></tr></thead><tbody >'
+					for(var i = 0; i<data.length ; i++){
+
+						{% for product in categorias  %}
+							if ('{{product.mar_nombre}}'==data[i].fields.mar_nombre) {
+
+								ident = '{{product.id}}';
+
+							};
+						{%endfor%}
+						
+						html += '<tr><td >'+ident+'</td><td >'+data[i].fields.mar_nombre+'</td><td >'+data[i].fields.mar_descripcion+'</td>'
+						
+
+						var botones = "<td ><button class='btn btn-success' id='btnupdate"+ident+"' value="+ident+" onclick='actualizarDatos("+ident+")'><span class='glyphicon glyphicon-pencil'></i></button> </td><td ><button class='btn btn-success' id='btndelete' value="+ident+" onclick='eliminarDatos("+ident+")'><span class='glyphicon glyphicon-remove'></i></button></td></tr></tr>";
+						html +=botones;
+					}
+					var uni= '</tbody></table></div>'
+					$('#datos').html(html+uni);
+				}
+			});
+	
+		}
+	function actualizarDatos(r){
+		var s = document.getElementById('btnupdate'+r).value
+		setTimeout("location.href='/categoria/editar/"+r+"'"+"",10);
+
+	}
+	function eliminarDatos(r){
+		var s = document.getElementById('btnupdate'+r).value
+		setTimeout("location.href='/categoria/eliminar/"+r+"'"+"",10);
+
+	}
+	function ingresarP(){
+
+		setTimeout("location.href='/categoria/registrar'",10)
+	}
+
+
+	</script>	
+{% endblock js %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<select>
+	<option>Elige un autor</option>
+	{% for cliente in clientes %}
+		<option value="{{cliente.id}}">{{cliente.cli_nombre}}</option>
+	{% endfor %}
+</select>
+{% endblock content %}
+<div id="datos">
+	
+</div>
+{% block js %}
+	<script >
+		$('select').on('change',inicio);
+		function inicio(){
+			var id=$(this).val();
+			console.log(id);
+			$.ajax({
+				data:{'id':id},
+				url: '/cliente/buscador/',
+				type: 'get',
+				success:function(data){
+					console.log(data)
+					var html =""
+					for(var i =0 ; i<data.length;i++){
+						html+= '<ul><li>'+data[i].fields.cli_nombre+'</li><li>'+data[i].fileds.cli_cedula+'</li></ul>'
+					}
+					$('datos').html(html)
+				},
+
+			});
+
+
+		}
+			
+
+
+	</script>
+{% endblock js %}

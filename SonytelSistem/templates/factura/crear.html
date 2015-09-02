@@ -1,0 +1,304 @@
+
+
+{% extends "base.html" %}
+{% block content %}
+<div class="alert alert-success" role="alert"><h1>FACTURACION</h1></div>
+
+
+<div class="well">
+  <div class="row">
+  <div class="col-md-6">
+  <div class="alert alert-info" role="alert">DATOS CLIENTES</div>
+  		<div class="row">
+        <div class="col-md-6">CEDULA</div>
+        <div class="col-md-6"><input type="text"  id="txtcedula" class="form-control" placeholder="CEDULA"></div>
+        <span class="input-group-btn"><button class="btn btn-primary" type="button" value="Buscar" onclick="javascript:buscarCliente()">BUSCAR</button></span>
+        <div class="col-md-6">NOMBRE</div>
+        <div class="col-md-6"><input type="text"  id="txtnombre" class="form-control" readonly placeholder="NOMBRE"></div>
+        <div class="col-md-6">APELLIDO</div>
+        <div class="col-md-6"><input type="text" id="txtapellido" class="form-control" readonly placeholder="APELLIDO"></div>
+      	<div class="col-md-6">DIRECCION</div>
+        <div class="col-md-6"><input type="text" id="txtdireccion" class="form-control" readonly placeholder="DIRECCION"></div>
+      </div>
+</div>
+  <div class="col-md-6">
+  		<div class="alert alert-info" role="alert">DATOS FACTURA</div>
+        <div class="col-md-6">NUMERO FACTURA</div>
+        <div class="col-md-6"><input type="text" id="txtnfactura" class="form-control" readonly="" required value="{{ nFactura }}"></div>
+  		<div class="col-md-6">FECHA</div>
+        <div class="col-md-6"><input type="text" id="txtfecha"  readonly class="form-control"  ></div>
+  </div>
+</div>
+</div>
+
+<div class="alert alert-info" role="alert">PRODUCTOS</div>
+<div class="well">
+<div class="row">
+    <div class="col-md-4">
+    	<div class="form-group">
+            <input class="form-control typeahead" type="text" id="txtbuscarproducto" placeholder="Buscar Producto" autocomplete="off" size="50" />
+        	
+        </div>
+
+    </div>
+    <div class="col-md-4">
+    	<div class="input-group"><span class="input-group-addon">CANTIDAD</span>
+    <input type="text" id="txtcantidad" class="form-control" placeholder="normal sized input group">
+    </div>
+    </div>
+    <div class="col-md-4">
+      <button type="button" onclick="addfilastabla()" class="btn btn-primary">AGREGAR</button>
+    </div>
+  </div>
+<div>
+    <br/>
+   <div class="table-responsive">
+   <table id="tablafactura"  class="table table-hover">
+   <thead>
+   	<tr>
+    	<td class="success">CODIGO</td>
+        <td class="success">DESCRIPCION</td>
+        <td class="success">CANTIDAD</td>
+        <td class="success">PRECIO U</td>
+        <td class="success">PRECIO T</td>
+        <td class="success">ELIMINAR</td>
+        
+    </tr>
+   </thead>
+   <tbody >
+   </tbody>
+   </table>
+  
+   </div>
+   <div class="row">
+      <div class="col-md-6">
+      
+      </div>
+      <div class="col-md-6">
+      
+        		<div class="row">
+        <div class="col-md-6">SUBTOTAL</div>
+        <div class="col-md-6"><input type="text"  id="txtsubotal" value="0" class="form-control" readonly placeholder="normal sized input group"></div>
+        <div class="col-md-6">IVA</div>
+        <div class="col-md-6"><input type="text"  id="txtiva" value="0" class="form-control" readonly placeholder="normal sized input group"></div>
+        <div class="col-md-6">DESCUENTO</div>
+        <div class="col-md-6"><input type="text" id="txtdescuento" value="0" class="form-control" readonly placeholder="normal sized input group"></div>
+      	<div class="col-md-6">TOTAL</div>
+        <div class="col-md-6"><input type="text" id="txttotal" value="0" class="form-control" readonly placeholder="normal sized input group"></div>
+      </div>readonly 
+
+      </div>
+    </div>
+</div>
+</div>
+
+<button type="button" class="btn btn-primary" id="btnGuardar">GUARDAR</button>
+{% endblock content %}
+{% block js %} 
+<script >
+    
+		 var f = new Date();
+        document.getElementById('txtfecha').value=(f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate());
+        var fecha = (f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate());
+		var nombre = []
+
+
+
+		var contador  = 0;
+		{% for prod in listarProductos %}
+			nombre[contador]="{{prod.pro_nombre}}";
+			console.log(nombre[contador]);
+			contador=contador+1;
+		{% endfor %}
+
+        $('input.typeahead').typeahead({
+                local: nombre
+            });
+
+		function buscarCliente(){
+			var cedulaBuscar=document.getElementById("txtcedula").value;
+			{% for cliente in listarclientes %}
+        if ('{{cliente.cli_cedula}}'==cedulaBuscar) {
+          var nombre = "{{cliente.cli_nombre}}"
+          var apellido = "{{cliente.cli_apellido}}"
+          var direccion = "{{cliente.cli_direccion}}"
+          var telefono = "{{cliente.cli_telefono}}"
+          var ciudad = "{{cliente.cli_ciudad}}"
+          document.getElementById("txtnombre").value=nombre;
+          document.getElementById("txtapellido").value=apellido;
+          document.getElementById("txtdireccion").value=direccion;
+
+        };
+				
+			{% endfor %}
+		}
+
+		function addfilastabla(){
+
+			var productobuscar = document.getElementById("txtbuscarproducto").value;
+      console.log(productobuscar)
+			var productoCant = document.getElementById("txtcantidad").value;
+
+			document.getElementById("txtbuscarproducto").value="";
+			document.getElementById("txtcantidad").value="";
+
+			var tabla = document.getElementById('tablafactura');
+			var lastRow= tabla.rows.length;
+			var row = tabla.insertRow(lastRow);
+      var lp= 0
+			{% for producto in listarProductos  %}
+            console.log('aki')
+				if("{{producto.pro_nombre}}"==productobuscar && Number({{producto.pro_cantidad}})>=productoCant){
+						var codigo = row.insertCell(0);
+						console.log(codigo);
+            var producto=row.insertCell(1);
+						var cantidad =row.insertCell(2);
+						var preciou=row.insertCell(3);
+						var preciot=row.insertCell(4);
+						var eliminar=row.insertCell(5);
+
+						codigo.innerHTML="{{producto.id}}";
+						producto.innerHTML="{{producto.pro_nombre}}";
+						cantidad.innerHTML =productoCant;
+						preciou.innerHTML= parseFloat(re("{{producto.pro_pvp}}"));
+            console.log({{producto.pro_pvp}});
+						pt = parseFloat(re("{{ producto.pro_pvp }}")) * parseInt(productoCant);
+            console.log(pt)
+						preciot.innerHTML=pt;
+
+						sumartotales();
+
+						eliminar.innerHTML="<button class='btn btn-danger' onclick='eliminarfilas(this)'>DELL</i></button>";
+						return false;
+
+					}
+				
+			 {% endfor %}
+
+		}
+    function re(texto){
+      var cadena = texto;
+      var aux='';
+      for(i=0; i<cadena.length; i++) 
+        if (cadena.charAt(i)==','){
+           aux=aux+".";
+        }else{
+          aux=aux+cadena.charAt(i);
+        }
+        return aux;
+    }
+
+
+    function eliminarfilas(t){
+      var td = t.parentNode;
+      var tr = td.parentNode;
+      var table = tr.parentNode;
+      table.removeChild(tr)
+      sumartotales()
+
+    }
+
+		function sumartotales(){
+
+			var tabla = document.getElementById('tablafactura');
+			var total=0;
+			for(var i = 1;tabla.rows[i];i++){
+
+				total+= Number(tabla.rows[i].cells[4].innerHTML);
+			}
+      console.log(total)
+
+			llenarCamposTotales(total)
+
+		}
+
+		function llenarCamposTotales(subtotal){
+
+      document.getElementById("txtsubotal").value=redondeo(subtotal);
+      sub = parseFloat(document.getElementById("txtsubotal").value);
+      document.getElementById("txtiva").value=redondeo(sub*0.12);
+      iva = parseFloat(document.getElementById("txtiva").value)
+      document.getElementById("txtdescuento").value=redondeo(parseFloat(sub)*0.05);
+
+      descuento = parseFloat(document.getElementById("txtdescuento").value)
+
+      total = document.getElementById("txttotal").value;
+      document.getElementById("txttotal").value=redondeo(sub+iva+descuento);
+
+     
+
+			
+			
+		}
+
+    function redondeo(numero){
+
+      var flotante = parseFloat(numero);
+      var resultado = Math.round(flotante*100)/100;
+      return resultado;
+
+    }
+
+  function sleep(miliseconds) {
+       var currentTime = new Date().getTime();
+
+       while (currentTime + miliseconds >= new Date().getTime()) {
+       }
+  }
+	
+	$("#btnGuardar").click(
+	function(){
+		var tabla = document.getElementById('tablafactura');
+		if (tabla.rows.length >1){
+			
+			for (var i = 1; tabla.rows[i];i++){
+        				$.get('/factura/crearr/',
+                {codigo:document.getElementById("tablafactura").rows[i].cells[0].innerHTML,
+                  nombrep:document.getElementById("tablafactura").rows[i].cells[1].innerHTML,
+        					cantidad:document.getElementById("tablafactura").rows[i].cells[2].innerHTML,
+        					precio:document.getElementById("tablafactura").rows[i].cells[3].innerHTML,
+        					cedula:document.getElementById("txtcedula").value,
+                  nombrec:document.getElementById("txtnombre").value,
+        					nFactura:document.getElementById("txtnfactura").value,
+        					numero:i,
+        					subtotal:document.getElementById("txtsubotal").value,
+        					iva:document.getElementById("txtiva").value,
+        					descuento:document.getElementById("txtdescuento").value,
+        					total:document.getElementById("txttotal").value,
+        					fechaa:fecha
+					});
+          sleep(3000);
+        console.log("numero::")
+        console.log(i)
+				
+				
+				}
+
+        
+
+        alert("Datos Guardados Correctamente... ")
+        var mywindow = window.open("/factura/imprimir/");
+        setTimeout(function(){mywindow},10);
+        setTimeout("location.href='/factura/crear/'",2000);
+        
+        
+
+        
+			
+			}
+      else
+        {
+            alert ( "No existen valores en la tabla!!" );
+        }
+		
+		
+		}
+	
+	)
+
+	</script>
+
+
+
+  
+{% endblock js %}

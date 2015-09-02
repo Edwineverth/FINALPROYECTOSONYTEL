@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SIGASOFT | SONYTEL</title>
+    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/prettyPhoto.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/animate.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="{{ STATIC_URL }}images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}principal/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}principal/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}principal/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}principal/images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
+<body>
+<header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-header" href="index.html"><h1>SONYTEL</h1></a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="{% url 'homeinicio'%}">INICIO</a></li>
+                    <li><a href="/acercade/">ACERCA DE</a></li>
+                    <li><a href="/servicios/">SERVICIO</a></li>
+                    <li><a href="/contactenos/">CONTACTENOS</a></li>
+                     <li class="login">
+                            <a  href="/registro/"><i class="icon-lock"></i></a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </header><!--/header-->
+ {% block content %}
+    {% endblock %}
+
+</div>
+<section id="bottom" class="wet-asphalt">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <h4>NOSOTROS</h4>
+                    <p>Nos aseguramos de dar el mejor servicio técnico con la mayor calidad posible para que nuestros clientes esten satisfechos.</p>
+                    
+                </div><!--/.col-md-3-->
+
+                <div class="col-md-3 col-sm-6">
+                    <h4>VINCULOS</h4>
+                    <div>
+                        <ul class="arrow">
+                            <li><a href="#">ITALY AUDIO</a></li>
+                            <li><a href="#">SONYTEL</a></li>
+                            <li><a href="#">PANASONIC</a></li>
+                            <li><a href="#">POLITICAS DE LA EMRPESA</a></li>
+                            <li><a href="#">TERMINOS DE USO</a></li>
+                            <li><a href="#">Copyright</a></li>
+                        </ul>
+                    </div>
+                </div><!--/.col-md-3-->
+
+                <div class="col-md-3 col-sm-6">
+                    <h4>EMPRESAS</h4>
+                    <div>
+                        <div class="media">
+                            <div class="pull-left">
+                                <img src="{{ STATIC_URL }}principal/images/blog/thumb1.jpg" alt="">
+                            </div>
+                            <div class="media-body">
+                                <span class="media-heading"><a href="#">ITALY AUDIO</a></span>
+                                <small class="muted"></small>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="pull-left">
+                                <img src="{{ STATIC_URL }}principal/images/blog/thumb2.jpg" alt="">
+                            </div>
+                            <div class="media-body">
+                                <span class="media-heading"><a href="#">SONYTEL </a></span>
+                                <small class="muted"></small>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="pull-left">
+                                <img src="{{ STATIC_URL }}principal/images/blog/thumb3.jpg" alt="">
+                            </div>
+                            <div class="media-body">
+                                <span class="media-heading"><a href="#">PANASONIC</a></span>
+                                <small class="muted"></small>
+                            </div>
+                        </div>
+                    </div>  
+                </div><!--/.col-md-3-->
+
+                <div class="col-md-3 col-sm-6">
+                    <h4>DIRECCION</h4>
+                    <address>
+                        <strong>Rocafuerte y 23 de Abril, Inc.</strong><br>
+                        795 Folsom Ave, Suite 600<br>
+                        Machala, CA 94107<br>
+                        <abbr title="Telefonos">P:</abbr> (07) 296-2673
+                    </address>
+                    <h4>ECUADOR</h4>
+                    <form role="form">
+                        <div class="input-group">
+                            <input type="text" class="form-control" autocomplete="off" placeholder="Enter your email">
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger" type="button">Go!</button>
+                            </span>
+                        </div>
+                    </form>
+                </div> <!--/.col-md-3-->
+            </div>
+        </div>
+    </section><!--/#bottom-->
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">OPTIMASOFT S.A.</a>. All Rights Reserved.
+                </div>
+                <div class="col-sm-6">
+                    <ul class="pull-right">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Faq</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a id="gototop" class="gototop" href="#"><i class="icon-chevron-up"></i></a></li><!--#gototop-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+
+    <script src="{{ STATIC_URL }}principal/js/jquery.js"></script>
+    <script src="{{ STATIC_URL }}principal/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}principal/js/jquery.prettyPhoto.js"></script>
+    <script src="{{ STATIC_URL }}principal/js/main.js"></script>
+</body>
+</html>

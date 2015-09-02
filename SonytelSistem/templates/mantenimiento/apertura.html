@@ -1,0 +1,338 @@
+
+
+{% extends "base.html" %}
+{% block content %}
+<div class="alert alert-success" role="alert"><h1>REGISTRO DE MANTENIMIENTO</h1></div>
+<div class="well">
+<div class="row">
+	<div class="col-md-2 col-md-offset-8">
+     
+          N# MANTENIMIENTO
+
+    </div>
+    
+    <div class="col-md-2">
+     
+          <input type="text"  id="txtmantenimiento" class="form-control" value="{{nmantenimiento}}">
+
+    </div>
+
+	<div class="col-md-2 col-md-offset-8">
+     
+          N# SOLICITUD
+
+    </div>
+    
+    <div class="col-md-2">
+     
+          <input type="text"  id="txtnsolicitud" class="form-control" placeholder="large sized input group">
+
+    </div>
+    <div class="col-md-2">
+    <br/>
+    NOMBRE CLIENTE</div>
+    <div class="col-md-9">
+    <br/>
+      <input type="text" id="txtcliente" class="form-control" placeholder="large sized input group">
+       
+    </div>
+    <div class="col-md-2">
+     TELEFONO:
+     </div>
+      <div class="col-md-3">
+   		<input type="text" id="txttelefono" class="form-control" placeholder="large sized input group">
+     </div>
+    <div class="col-md-2 col-md-offset-1">
+     FECHA  COMPRA:
+    </div>
+      <div class="col-md-3">
+   		<div class='input-group date' id='datetimepicker1'>
+                    <input type='text' id="txtfechacompra" class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+        </div>
+         
+ </div>
+ <div class="col-md-2">
+     MODELO:
+    </div>
+      <div class="col-md-3">
+   		<input type="text" id="txtmodelo" class="form-control" placeholder="large sized input group">
+     </div>
+    <div class="col-md-2 col-md-offset-1">
+     MARCA:
+     </div>
+      <div class="col-md-3">
+   		<input type="text" id="txtmarca" class="form-control" placeholder="large sized input group">
+     </div>
+     <div class="col-md-2">
+     SERIE:
+     </div>
+      <div class="col-md-3">
+   		<input type="text" id="txtserie" class="form-control" placeholder="large sized input group">
+     </div>
+    <div class="col-md-2 col-md-offset-1">
+     GARANTIA:
+     </div>
+      <div class="col-md-3">
+   		<input type="text" id="txtgarantia" class="form-control" placeholder="Ingrese la garantia del equipo">
+     </div>
+     <div class="col-md-2">
+     FECHA ENTREGA:
+     </div>
+      <div class="col-md-3">
+   		<div class='input-group date' id='datetimepicker2'>
+                    <input type='text' id="txtfechaentrega" class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+        </div>
+     </div>
+    <div class="col-md-2 col-md-offset-1">
+     CI CLIENTE:
+     </div>
+      <div class="col-md-3">
+   		<input type="text" id="txtcedulacliente" class="form-control" placeholder="large sized input group">
+     </div>
+    
+  </div>
+</div>
+<div class="well">
+<div class="row">
+<div class="row">
+      <div class="col-md-1 col-md-offset-1">REPUESTO:</div>
+      <div class="col-md-4"><input type="text" id="txtrepuesto" class="form-control typeahead" placeholder="Digite repuesto"></div>
+       <div class="col-md-1">
+        CANTIDAD
+      </div>
+       <div class="col-md-1">
+        <input type="number" id="txtcantidad" class="form-control" placeholder="cnt">
+      </div>
+      <div class="col-md-2">
+        <button type="button" onclick="addfilastabla()" id="btnagregar" class="btn btn-info">AGREGAR</button>
+      </div>
+      
+    </div>
+    <br/>
+       <div class="table-responsive col-md-7 col-md-offset-2">
+  
+   <table id="tablamantenimiento"  class="table table-hover">
+   <thead>
+   	<tr>
+    	<td class="success">CODIGO</td>
+        <td class="success">NOMBRE</td>
+        <td class="success">CANTIDAD</td>
+        <td class="success">-------</td>
+        
+        
+    </tr>
+   </thead>
+   <tbody >
+   </tbody>
+   </table>
+  
+   </div>
+    <br/>
+    <br/>
+    <br/>
+     <br/>
+    <br/>
+     <br/>
+    <br/>
+
+    </div>
+  </div>
+</div>
+<div class="well">
+  <div class="row">
+    <div class="col-md-2"> INFORME TECNICO </div>
+    <div class="col-md-10">
+   	  <div class="col-md-12"><textarea class="form-control" id="txtinforme" rows="5" id="comment" placeholder="Describa algunas observaciones hacerca del fallo"></textarea>
+        <br/>
+        <br/>
+      </div>
+        
+        <div class="col-md-2 col-md-offset-10"> 
+          <button type="button" id="btnGuardar" class="btn btn-primary ">GUARDAR</button>
+        </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %} 
+<script >
+
+		var productoslist =[]
+		var count = 0
+		{% for product in productos %}
+			productoslist[count] = '{{product.pro_nombre}}';
+			count=count+1
+
+		{% endfor %}
+
+		$('#txtrepuesto').typeahead({
+			local:productoslist
+		})
+
+
+		$(function () {
+	                $('#datetimepicker1').datetimepicker();
+	            });
+		$(function () {
+	                $('#datetimepicker2').datetimepicker();
+	            });
+		
+		var codigosolicitud
+		var paramstr = window.location.search.substr(1);
+		var paramarr = paramstr.split ("&");
+		var params = {};
+		var clienteid
+		var articuloid 
+
+		for ( var i = 0; i < paramarr.length; i++) {
+			var tmparr = paramarr[i].split("=");
+			params[tmparr[0]] = tmparr[1];
+		}
+		if (params['variable']) {
+			console.log('El valor del parámetro variable es: '+params['variable']);
+			codigosolicitud= params['variable']
+			console.log("codi")
+			console.log(codigosolicitud)
+
+			document.getElementById('txtnsolicitud').value = codigosolicitud
+
+			{% for solicitud in solicitudes %}
+					if({{solicitud.id}}==codigosolicitud){
+						clienteid = {{solicitud.cli_id}}
+						articuloid= {{solicitud.art_id}}
+					}
+			{% endfor %}
+			
+			{% for client in clientes %}
+				if({{client.id}}==clienteid){
+					document.getElementById('txtcliente').value = '{{client.cli_nombre}}'
+					document.getElementById('txttelefono').value = '{{client.cli_telefono}}'
+					document.getElementById('txtcedulacliente').value = '{{client.cli_cedula}}'
+
+				}
+			{% endfor %}
+
+			{% for articulo in articulos %}
+
+				if({{articulo.id}}==articuloid){
+
+					document.getElementById('txtserie').value= '{{articulo.art_serie}}'
+
+					{% for modelo in modelos %}
+						if({{modelo.id}}=={{articulo.mod_id}}){
+
+							document.getElementById('txtmodelo').value='{{articulo.art_nombre}} - {{modelo.mod_nombre}}'
+						}
+					{% endfor %}
+
+					{% for categoria in categorias %}
+						if({{categoria.id}}=={{articulo.mar.id}}){
+
+							document.getElementById('txtmarca').value='{{categoria.mar_nombre}}'
+
+						}
+					{% endfor %}
+
+					
+				}
+				
+			{% endfor %}
+
+
+		} else {
+			console.log('No se envió el parámetro variable');
+		}
+		/*
+		funcion para añadir filas a la tabla botstrap
+		 */
+		function addfilastabla(){
+
+			var productobuscar = document.getElementById("txtrepuesto").value;
+      		console.log(productobuscar)
+			var productoCant = document.getElementById("txtcantidad").value;
+
+			document.getElementById("txtrepuesto").value="";
+			document.getElementById("txtcantidad").value="";
+
+			var tabla = document.getElementById('tablamantenimiento');
+			var lastRow= tabla.rows.length;
+			var row = tabla.insertRow(lastRow);
+      		var lp= 0
+			{% for producto in productos  %}
+            	console.log('aki')
+				if("{{producto.pro_nombre}}"==productobuscar && Number({{producto.pro_cantidad}})>=productoCant){
+						var codigo = row.insertCell(0);
+						console.log(codigo);
+            			var producto=row.insertCell(1);
+						var cantidad =row.insertCell(2);
+						var eliminar =row.insertCell(3);
+						
+
+						codigo.innerHTML="{{producto.id}}";
+						producto.innerHTML="{{producto.pro_nombre}}";
+						cantidad.innerHTML =productoCant;
+						
+
+						eliminar.innerHTML="<button class='btn btn-danger' onclick='eliminarfilas(this)'>DELL</i></button>";
+						return false;
+
+					}
+				
+			 {% endfor %}
+
+
+
+
+
+		}
+		function eliminarfilas(t){
+		    var td = t.parentNode;
+		    var tr = td.parentNode;
+		    var table = tr.parentNode;
+		    table.removeChild(tr)
+
+    	}
+
+$("#btnGuardar").click(function(){
+  var tabla = document.getElementById('tablamantenimiento');
+  if (tabla.rows.length > 1){
+      for (var i=1; tabla.rows[i];i++)
+      {
+              $.get('/mantenimiento/guardar/',
+                      {codigo:document.getElementById("tablamantenimiento").rows[i].cells[0].innerHTML,
+                          nombre:document.getElementById("tablamantenimiento").rows[i].cells[1].innerHTML,
+                          cantidad:document.getElementById("tablamantenimiento").rows[i].cells[2].innerHTML,
+                          garantia:document.getElementById('txtgarantia').value,
+  						fechaentrega:document.getElementById('txtfechaentrega').value,
+  						informe:document.getElementById('txtinforme').value,
+  						fechacompra:document.getElementById('txtfechacompra').value,
+  						numeroM:document.getElementById('txtmantenimiento').value,
+  						nmant:document.getElementById('txtnsolicitud').value,
+              numero:i
+                          
+                      });
+
+
+      }
+
+      alert("Datos Guardados Correctamente... ")
+
+     
+  }
+  else
+  {
+      alert ( "no hay valores!!" );
+  }
+});
+		
+</script>
+
+
+
+{% endblock js %}

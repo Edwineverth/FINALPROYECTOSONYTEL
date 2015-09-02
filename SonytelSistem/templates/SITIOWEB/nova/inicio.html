@@ -1,0 +1,246 @@
+{% extends "SITIOWEB/nova/index.html" %}
+{% block content %}
+    
+    <section id="main-slider" class="no-margin">
+         <div class="carousel slide wet-asphalt"  style=" margin:-10px">
+           <ol class="carousel-indicators">
+                <li data-target="#main-slider" data-slide-to="0" class="active"></li>
+                <li data-target="#main-slider" data-slide-to="1"></li>
+                <li data-target="#main-slider" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" style ="height: 400px">
+                <div class="item active" style="background-image: url({{ STATIC_URL }}principal/images/slider/bg1.jpg)">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="carousel-content centered">
+                                    <h2 class="boxed animation animated-item-1">Ecualizadores de máxima potencia.</h2>
+                                    <br>
+                                    <p class="boxed animation animated-item-4">Para que disfrutes de tus mejores musicas a todo gusto.</p>
+                                    </br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.item-->
+                <div class="item" style="background-image: url({{ STATIC_URL }}principal/images/slider/bg2.jpg)">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content center centered">
+                                    <h2 class="boxed animation animated-item-1">Equipos Sony ULTRA POWER</h2>
+                                    <br>
+                                     <p class="boxed animation animated-item-2">Ofresemos equipos Sony,con precios a su comonidad.</p>
+                                    </br>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.item-->
+                <div class="item" style="background-image: url({{ STATIC_URL }}principal/images/slider/bg3.jpg)">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content centered">
+                                    <h2 class="boxed animation animated-item-1">Soporte técnico para equipos ITALY AUDIO</h2>
+                                    <p class="boxed animation animated-item-2">Nos aseguramos de que tengas el mejor servicio.</p>
+                                   
+                                </div>
+                            </div>
+                              </div>
+                </div><!--/.item-->
+            </div><!--/.carousel-inner-->
+        </div><!--/.carousel-->
+        <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
+            <i class="icon-angle-left"></i>
+        </a>
+        <a class="next hidden-xs" href="#main-slider" data-slide="next">
+            <i class="icon-angle-right"></i>
+        </a>
+    </section><!--/#main-slider-->
+
+    <section id="services" class="emerald">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-twitter icon-md"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="media-heading">Twitter</h3>
+                            <p>Para cualquier pregunta u servicio. Escriba al hashtack #SONYTEL y responderemos cualquier inquietud .</p>
+                        </div>
+                    </div>
+                </div><!--/.col-md-4-->
+                <div class="col-md-4 col-sm-6">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-facebook icon-md"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="media-heading">Facebook </h3>
+                            <p>Estamos a su disposición. Visitenos en nuestro facebook para que conosca más de nuestros servicios.</p>
+                        </div>
+                    </div>
+                </div><!--/.col-md-4-->
+                <div class="col-md-4 col-sm-6">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-google-plus icon-md"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="media-heading">Google Plus </h3>
+                            <p>Estamos para usted. Escribanos a nuestra cuenta de google para soportes y mantenimiento tecnicos de equipos.</p>
+                        </div>
+                    </div>
+                </div><!--/.col-md-4-->
+            </div>
+        </div>
+    </section><!--/#services-->
+
+    <section id="recent-works">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h3>Nuestros proyectos</h3>
+                    <p>Estramos trabajando dia a dia para dar el mejor servicio a nuestros clientes.</p>
+                    <div class="btn-group">
+                        <a class="btn btn-danger" href="#scroller" data-slide="prev"><i class="icon-angle-left"></i></a>
+                        <a class="btn btn-danger" href="#scroller" data-slide="next"><i class="icon-angle-right"></i></a>
+                    </div>
+                    <p class="gap"></p>
+                </div>
+                <div class="col-md-9">
+                    <div id="scroller" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="portfolio-item">
+                                            <div class="item-inner">
+                                                <img class="img-responsive" src="{{ STATIC_URL }}principal/images/portfolio/recent/item1.jpg" alt="">
+                                                <h5>
+                                                    Nova - Corporate site template
+                                                </h5>
+                                                <div class="overlay">
+                                                    <a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="{{ STATIC_URL }}principal/{{ STATIC_URL }}principal/images/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                            
+                                    <div class="col-xs-4">
+                                        <div class="portfolio-item">
+                                            <div class="item-inner">
+                                                <img class="img-responsive" src="{{ STATIC_URL }}principal/images/portfolio/recent/item3.jpg" alt="">
+                                                
+                                                <div class="overlay">
+                                                    <a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="{{ STATIC_URL }}principal/images/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                            
+                                    <div class="col-xs-4">
+                                        <div class="portfolio-item">
+                                            <div class="item-inner">
+                                                <img class="img-responsive" src="{{ STATIC_URL }}principal/images/portfolio/recent/item2.jpg" alt="">
+                                                <h5>
+                                                    Flat Theme - Business Theme
+                                                </h5>
+                                                <div class="overlay">
+                                                    <a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="{{ STATIC_URL }}principal/images/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--/.row-->
+                            </div><!--/.item-->
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="portfolio-item">
+                                            <div class="item-inner">
+                                                <img class="img-responsive" src="{{ STATIC_URL }}principal/images/portfolio/recent/item4.png" alt="">
+                                                <h5>
+                                                    Flat Theme - Business Theme
+                                                </h5>
+                                                <div class="overlay">
+                                                    <a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="{{ STATIC_URL }}principal/images/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="portfolio-item">
+                                            <div class="item-inner">
+                                                <img class="img-responsive" src="{{ STATIC_URL }}principal/images/portfolio/recent/item5.jpg" alt="">
+                                                <h5>
+                                                    Nova - Corporate site template
+                                                </h5>
+                                                <div class="overlay">
+                                                    <a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="{{ STATIC_URL }}principal/images/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                            
+                                    <div class="col-xs-4">
+                                        <div class="portfolio-item">
+                                            <div class="item-inner">
+                                                <img class="img-responsive" src="{{ STATIC_URL }}principal/images/portfolio/recent/item6.jpg" alt="">
+                                                <h5>
+                                                    Fornax - Apps site template
+                                                </h5>
+                                                <div class="overlay">
+                                                    <a class="preview btn btn-danger" title="Malesuada fames ac turpis egestas" href="{{ STATIC_URL }}principal/images/portfolio/full/item1.jpg" rel="prettyPhoto"><i class="icon-eye-open"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!--/.item-->
+                        </div>
+                    </div>
+                </div>
+            </div><!--/.row-->
+        </div>
+    </section><!--/#recent-works-->
+
+    <section id="testimonial" class="alizarin">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="center">
+                        <h2>El mejor servicio</h2>
+                        <p>Estamos a su disposicion para atender en cualquiera de las siguientes preguntas..</p>
+                    </div>
+                    <div class="gap"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <blockquote>
+                                <p>Mantenimiento y soporte técnico de equipos ITALY AUDIO.</p>
+                                <small>Soporte de la mejor calidad <cite title="Source Title"></cite></small>
+                            </blockquote>
+                            <blockquote>
+                                <p>Mantenimiento y soporte técnico de televisores marca SONY.</p>
+                                
+                            </blockquote>
+                        </div>
+                        <div class="col-md-6">
+                            <blockquote>
+                                <p>Venta de repuestos electronicos para equipos sony.</p>
+                                <small>Todo tipo de productos electronicos y repuestos <cite title="Source Title"></cite></small>
+                            </blockquote>
+                            <blockquote>
+                                <p>Consejos y sujerencias sobre cuidado de equipos SONY e ITALY AUDIO.</p>
+                                <small>Cualquier inquietud hacerca de nuestro serivicio será atendida <cite title="Source Title"></cite></small>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!--/#testimonial-->
+
+    
+{% endblock content %}

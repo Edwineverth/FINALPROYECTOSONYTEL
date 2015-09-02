@@ -1,0 +1,127 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="alert alert-info" role="alert"><H1>SOLICITUDES DE MANTENIMIENTO</H1> </div>
+<span class="label label-default">Buscar</span>
+<div class="well">
+  <p>REGISTRO DE SOLICITUDES DE MANTENIMIENTO EMITIDAS </p>
+    <form method="POST" action="/cliente/buscar/">{% csrf_token %}
+		 <div class="col-lg-6" >
+		      <div class="input-group">
+		        <input type="text" class="form-control" placeholder="Ingrese el cliente a buscar" name="buscalo">
+		        <span class="input-group-btn">
+		          <button class="btn btn-default" type="submit" >Buscar</button>
+		        </span></div>
+		      <!-- /input-group -->
+		  </div>    	
+    </form>
+
+    <!-- /.col-lg-6 -->
+    </br>
+    <br/>
+    </br>
+    <br/>
+    </br>
+    <br/>
+	<div class="table-responsive">
+		<table class="table table-hover">
+	        <thead>
+	          <tr>
+	            <td class="success">#</td>
+	            <td class="success">FECHA</td>
+	            <td class="success">FALLA</td>
+	            <td class="success">OBERVACIONES</td>
+	            <td class="success">ABONO</td>
+	            <td class="success">SALDO</td>
+	            <td class="success">TOTAL</td>
+	            <td class="success">ESTADO</td>
+	            <td class="success">ARTICULO</td>
+	            <td class="success">CLIENTE</td>
+	             <td class="success">------</td>
+	              <td class="success">-----</td>
+	              <td class="success">-----</td>
+
+	           
+	          </tr>
+	        </thead>
+	        <tbody >
+	   
+	         
+	          <!-- Aplicadas en las celdas (<td> o <th>) -->
+	         
+		          {% for solmant in  Solicitudmantenimiento %}
+			          
+			        	{% if solmant.solm_estado == "E" %}
+						  	<tr>
+					          	<td >{{solmant.id}}</td>
+				          		<td >{{solmant.solm_fecha}}</td>
+					            <td >{{solmant.solm_falla}}</td>
+					            <td >{{solmant.solm_observaciones}}</td>
+					            <td >{{solmant.solm_abono}}</td>
+					            <td >{{solmant.solm_saldo}}</td>
+					            <td >{{solmant.solm_total}}</td>
+					            
+					            {% if solmant.solm_estado == "E" %}
+								  <td >EN ESPERA</td>
+								{% endif %}
+								{% if solmant.solm_estado == "T" %}
+								  <td >REPARADA</td>
+								{% endif %}
+					            
+					            
+					            
+					            {% for r in articulos %}
+					            	{% if r.id == solmant.art_id %}
+									  <td >{{r.art_nombre}}</td>
+									{% endif %}
+					            {% endfor %}
+
+
+					            {% for c in clientes %}
+					            	{% if c.id == solmant.cli_id %}
+									  <td >{{c.cli_nombre}}</td>
+									{% endif %}
+					            {% endfor %}
+					            
+					            <td ><button class='btn btn-success' id="btnupdate{{solmant.id}}" value="{{solmant.id}}" onclick='actualizarDatos({{solmant.id}})'><span class="glyphicon glyphicon-pencil"></i></button> </td>
+					            <td ><button class='btn btn-success' id="btndelete" value="{{solmant.id}}" onclick='eliminarDatos({{solmant.id}})'><span class="glyphicon glyphicon-remove"></i></button></td>
+					            <td ><button class='btn btn-success' id="btnreparar{{solmant.id}}" value="{{solmant.id}}" onclick='reparar({{solmant.id}})'><span class="glyphicon glyphicon-wrench"></i></button></td>
+
+				            </tr>
+						{% endif %}
+
+
+		          {% endfor %}
+	      	</tbody>
+		</table>
+	</div>
+   
+</div>
+</div>
+
+{% endblock content %}
+
+{% block js %}
+	<script>
+	function actualizarDatos(r){
+		var s = document.getElementById('btnupdate'+r).value
+		setTimeout("location.href='/solicitudmantenimiento/editar/"+r+"'"+"",10);
+
+	}
+	function eliminarDatos(r){
+		var s = document.getElementById('btndelete'+r).value
+		setTimeout("location.href='/solicitudmantenimiento/eliminar/"+r+"'"+"",10);
+
+	}
+
+	function reparar(r){
+		var s = document.getElementById('btnreparar'+r).value
+
+		window.location="/mantenimiento/generar/?variable="+s
+		
+
+	}
+
+	</script>
+
+{% endblock js %}

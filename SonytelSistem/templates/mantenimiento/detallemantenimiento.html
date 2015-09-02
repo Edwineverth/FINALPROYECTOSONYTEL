@@ -1,0 +1,62 @@
+
+
+{% extends "base.html" %}
+{% block content %}
+<h1>DETALLE DE MANTENIMIENTO</h1>
+<span class="label label-default">Buscar</span>
+<div class="well">
+  <p>------ </p>
+
+   	<ul>            N° {{mantenimiento.id}}</ul>
+   	<ul>        FECHA:{{mantenimiento.man_fecha}}</ul>
+   	<ul>     GARANTIA{{mantenimiento.man_garantia}}</ul>
+   	<ul>      INFORME{{mantenimiento.man_informe}}</ul>
+   	<ul>FECHA ENTREGA {{mantenimiento.man_fechaentrega}}</ul>
+   	<ul>    ESTADO{{mantenimiento.man_estado}}</ul>
+	<h2>Repuestos utilizados en el mantenimiento s</h2>
+	<div class="table-responsive col-md-3" >
+		<table class="table table-hover">
+	        <thead>
+	          <tr>
+	            <td class="success">#</td>
+	            <td class="success">NOMBRE</td>
+	            <td class="success">CANTIDAD</td>
+
+	          </tr>
+	        </thead>
+	        <tbody >
+	        <tr>
+			   
+				   	{% for repuesto in repuestos %}
+
+				   		
+				   		{% if repuesto.man_id == mantenimiento.id %}
+
+				   			{% for producto in productos %}
+
+					   			{% if repuesto.pro_id == producto.id %}
+
+					   				<td>{{producto.id}}</td>
+					   				<td>{{producto.pro_nombre}} </td>
+					   				<td>{{repuesto.rep_cantidad}}</td>
+
+					   			{% endif %}
+				   			
+				   			{% endfor %}
+				   			
+				   		{% endif %}
+
+
+			</tr>
+				   	{% endfor %}
+		</tbody>
+		</table>
+	</div>
+			
+
+{% endblock content %}
+
+{% block js %}
+	
+
+{% endblock js %}

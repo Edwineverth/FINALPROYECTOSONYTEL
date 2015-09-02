@@ -1,0 +1,36 @@
+	'<div class="table-responsive">
+		<table class="table table-hover">
+	        <thead>
+	          <tr>
+	            <td class="success">CEDULA</td>
+	            <td class="success">NOMBRE</td>
+	            <td class="success">APELLIDO</td>
+	            <td class="success">TELEFONO</td>
+	            <td class="success">DIRECCION</td>
+	            <td class="success">EMAIL</td>
+	            <td class="success">ESTADO</td>
+	            <td class="success">CIUDAD</td>
+	          </tr>
+	        </thead>
+	        <tbody >
+	   
+	         
+	          <!-- Aplicadas en las celdas (<td> o <th>) -->
+		          {% for cliente in  clientes %}
+			          <tr>
+		          		<td >'+data[i].fields.cli_cedula+'</td>
+			            <td >'+data[i].fields.cli_nombre+'</td>
+			            <td >'+data[i].fields.cli_apellido+'</td>
+			            <td >'+data[i].fields.cli_telefono+'</td>
+			            <td >'+data[i].fields.cli_direccion+'</td>
+			            <td >'+data[i].fields.cli_email+'</td>
+			            <td >'+data[i].fields.cli_estado+'</td>
+			            <td >'+data[i].fields.ciu+'</td>
+			          	
+			           
+			          </tr>
+		          {% endfor %}
+	      	</tbody>
+		</table>
+	</div>
+					  '

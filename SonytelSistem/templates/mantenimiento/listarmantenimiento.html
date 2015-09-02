@@ -1,0 +1,87 @@
+
+
+{% extends "base.html" %}
+{% block content %}
+<h1>LISTADO DE MANTENIMIENTOS</h1>
+<span class="label label-default">Buscar</span>
+<div class="well">
+  <p>Registro de facturas emitidas </p>
+    <form method="POST" action="/cliente/buscar/">{% csrf_token %}
+		 <div class="col-lg-6" >
+		      <div class="input-group">
+		        <input type="text" class="form-control" placeholder="Ingrese el cliente a buscar" name="buscalo">
+		        <span class="input-group-btn">
+		          <button class="btn btn-default" type="submit" >Buscar</button>
+		        </span></div>
+		      <!-- /input-group -->
+		  </div>    	
+    </form>
+
+    <!-- /.col-lg-6 -->
+    </br>
+    <br/>
+    </br>
+    <br/>
+   
+	<div class="table-responsive">
+		<table class="table table-hover">
+	        <thead>
+	          <tr>
+	            <td class="success">#</td>
+	            <td class="success">FECHA</td>
+	            <td class="success">GARANTIA</td>
+	            <td class="success">INFORME</td>
+	            <td class="success">FECHA ENTREGA</td>
+	            <td class="success">ESTADO</td>
+	            <td class="success">SOLT. ING.</td> 
+	            <td class="success">------.</td> 
+	            <td class="success">------.</td>    
+	          </tr>
+	        </thead>
+	        <tbody >
+	   
+	         
+		          {% for mant in  mantenimiento %}
+			          <tr>
+			          	<td >{{mant.id}}</td>
+		          		<td >{{mant.man_fecha}}</td>
+			            <td >{{mant.man_garantia}}</td>
+			            <td >{{mant.man_informe}}</td>
+			            <td >{{mant.man_fechaentrega}}</td>
+			            {% if mant.man_estado == "R" %}
+						  <td >REPARADA</td>
+						{% endif %}
+						<td >{{mant.solm_id}}</td>
+			            <td ><button class='btn btn-success' id="btnupdate{{mant.id}}" value="{{mant.id}}" onclick='actualizarDatos({{mant.id}})'><span class="glyphicon glyphicon-pencil"></i></button> </td>
+			            <td ><button class='btn btn-success' id="btndelete{{mant.id}}" value="{{mant.id}}" onclick='eliminarDatos({{mant.id}})'><span class="glyphicon glyphicon-remove"></i></button></td>
+
+			          </tr>
+		          {% endfor %}      
+			          	
+			           
+			        
+	      	</tbody>
+		</table>
+	</div>
+   
+</div>
+</div>
+
+{% endblock content %}
+
+{% block js %}
+	<script>
+	function actualizarDatos(r){
+		var s = document.getElementById('btnupdate'+r).value
+		setTimeout("location.href='/mantenimiento/editar/"+r+"'"+"",10);
+
+	}
+	function eliminarDatos(r){
+		var s = document.getElementById('btnupdate'+r).value
+		setTimeout("location.href='/mantenimiento/eliminar/"+r+"'"+"",10);
+
+	}
+	</script>
+	
+
+{% endblock js %}

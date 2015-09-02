@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+	HOLA MUNDO :v
+ 
+	<Form  action = ""  method = "post" > {%  csrf_token  %} 
+    <p> ¿Seguro que quieres eliminar " {{  facturas  }} "? </p> 
+    <input  type = "submit"  value = "Confirmar "  /> 
+	</form>
+
+{% endblock content %}

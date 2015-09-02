@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />      
+<link href="{{STATIC_URL}}css/bootstrap.css" rel='stylesheet' type='text/css'/>
+<link href="{{STATIC_URL}}css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Plantilla de FACTURA</title>
+</head>
+<body onload="window.print();">
+
+<div class="container">
+<div class="col-xs-4">
+
+
+</div>
+<div class="row">
+<div class="col-xs-3 text-center">
+<small><h1> <strong> FACTURA</strong></h1></small>
+
+</div>
+ </div>
+
+
+<div class="row">
+<div class="col-xs-6">
+<div class="panel panel-danger">
+<div class="panel-heading">
+Datos de Cliente
+</div>
+<div class="panel-body">
+	
+<strong>Nombre:</strong> {{listarClientes}}<br>
+<strong>Teléfono:</strong> {{listarClientes.cli_telefono}}<br>
+<strong>Dirección: </strong>{{listarClientes.cli_direccion}}<br>
+<strong>Email: </strong>{{listarClientes.cli_email}}<br>
+<strong>Ciudad: </strong>{{listarClientes.ciu}}
+				
+</div>
+</div>
+</div>
+<div class="col-xs-6 col-xs-offset-0 text-right">
+<div class="panel panel-danger">
+<div class="panel-heading">
+Datos de Factura 
+</div>
+<div class="panel-body">
+    <strong> <h2>N:     00-{{nFactura}}</h2></strong><br>
+   
+   <strong> Fecha: {{listarFacturas.fac_fecha}}</strong>
+    	
+
+</div>
+</div>
+</div>
+</div>
+
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>
+<h4><strong>Código</strong></h4>
+</th>
+<th>
+<h4><strong>Descripción</strong></h4>
+</th>
+<th>
+<h4><strong>Cantidad</strong></h4>
+</th>
+<th>
+<h4><strong>Precio U.</strong></h4>
+</th>
+<th>
+<h4><strong>Precio T.</strong></h4>
+</th>
+</tr>
+</thead>
+<tbody>
+
+	
+	{% for detalle in detalles %}
+	<tr>
+		<td>{{detalle.pro_id}}</td>
+		<td>{{detalle.pro}}</td>
+		<td>{{detalle.det_cantiadd}}</td>
+		<td>{{detalle.det_preciou}}</td>
+		<td>{{detalle.det_preciot}}</td>
+	</tr>
+
+		{% endfor %}
+	
+</tbody>
+</table>
+
+<div class="row text-right">
+<div class="col-xs-3 col-xs-offset-7"><strong>
+Sub Total:<br>
+IVA 12%:<br>
+Total:
+</strong></div>
+<div class="col-xs-2 text-right"><strong>
+$ {{listarFacturas.fac_subtotal}}<br>
+$  {{listarFacturas.fac_iva}}<br>
+$ {{listarFacturas.fac_total}}
+</strong></div>
+</div>
+</div>
+
+
+</body>
+</html>
+
+
+

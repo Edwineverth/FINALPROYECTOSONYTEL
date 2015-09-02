@@ -1,0 +1,175 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="alert col-md-offset-2 alert-info col-md-8" role="alert"><h1>SOLICITUD DE MANTENIMIENTO</h1></div>
+<div class="well col-md-offset-2 col-md-8">
+<div class="row">
+  <div class="col-md-6">
+<div class="row">
+      <div class="col-md-4">N#:</div>
+      <div class="col-md-6">
+            <input type="text" id="txtnumerosolicitud" class="form-control" value="{{solicitudes}}">
+      </div>
+      
+      <div class="col-md-4">Fecha:
+      <br/>
+      
+      
+      </div>
+      <div class="col-md-6">
+            <input type="text" id="txtFecha" class="form-control" placeholder="Fecha">
+            <br/>
+      
+      
+      </div>
+      <div class="col-md-4">Falla:</div>
+      <div class="col-md-8"><input type="text" id="txtFalla" class="form-control" placeholder="Escriba la falla del equipo"></div>
+      <div class="col-md-4">Obeservacion:</div>
+      <div class="col-md-8"><textarea class="form-control" id="txtObservacion" rows="5" id="comment" placeholder="Describa algunas observaciones hacerca del fallo"></textarea></div>
+
+    </div>
+</div>
+  <div class="col-md-offset-1 col-md-5">
+  		
+        <br/>
+  	  
+      <div class="col-md-3">
+       <br/>
+        <br/>
+      Articulo:</div>
+      <div class="col-md-8">
+       <br/>
+        <br/><input type="text" class="form-control" id="txtArticulo" placeholder="Digite Articulo"></div>
+      <div class="col-md-3">Cliente:</div>
+      <div class="col-md-8" ><input type="text" id="txtCliente" class="form-control typeahead" placeholder="Cliente">
+      
+     
+        
+      </div>
+  
+  </div>
+<div class="row">
+    <div class="col-md-6">
+    </div>
+    
+    <div class="col-md-6 ">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div class="alert alert-info" role="alert">
+        <div class="row col-md-offset-2" >
+        	<br/>
+
+             
+            
+            	<div class="col-md-4">ABONO:</div>
+                <div class="col-md-8"><input type="text" class="form-control" id="txtAbono" value="0" placeholder="ABONO"></div>
+                <div class="col-md-4">SALDO:</div>
+                <div class="col-md-8"><input type="text" class="form-control" id="txtSaldo" value="0" placeholder="SALDO"></div>
+                <div class="col-md-4">TOTAL:</div>
+                <div class="col-md-8"><input type="text" class="form-control" id="txtTotal" value="0" placeholder="TOTAL"></div>
+                <br/>
+                <div class="col-md-4">
+                <br/>
+                <br/>
+                
+                </div>
+          <div class="col-md-8">
+                <br/>
+                <br/>
+            <button type="button" class="btn btn-primary btn btn-default btn-lg" id="btnGuardar" >GUARDAR..<span class="glyphicon glyphicon-modal-window"></span></button>
+            </div>
+            </div>    
+      		
+            
+            
+        </div>
+</div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block js %}
+	<script>
+
+  var f = new Date();
+        document.getElementById('txtFecha').value=(f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate());
+        var fecha = (f.getFullYear() + "-" + (f.getMonth() +2) + "-" + f.getDate());
+    var nombre = []
+
+  var clienteslist = []
+  var c =0
+  {% for cl in clientes %}
+    clienteslist[c]='{{cl.cli_nombre}}';
+    c=c+1
+  {% endfor %}
+  $('#txtCliente').typeahead({
+    local:clienteslist
+  })
+  var articuloslist = []
+  var d =0
+  {% for arti in articulos %}
+    articuloslist[d]='{{arti.art_nombre}}';
+    d=d+1
+  {% endfor %}
+  $('#txtArticulo').typeahead({
+    local:articuloslist
+  })
+
+ 
+
+  $('#txtAbono').on('keypress',sumarizacionabono);
+  function sumarizacionabono(){
+    var abono = document.getElementById('txtAbono').value
+    console.log(abono)
+    var saldo = document.getElementById('txtSaldo').value
+    console.log(saldo)
+    var total = parseFloat(saldo-abono)
+    console.log(total)
+    document.getElementById('txtTotal').value=total
+
+  }
+  $('#txtSaldo').on('keypress',sumarizacionabono);
+  function sumarizacionabono(){
+    var abono = document.getElementById('txtAbono').value
+    console.log(abono)
+    var saldo = document.getElementById('txtSaldo').value
+    console.log(saldo)
+    var total = parseFloat(saldo-abono)
+    console.log(total)
+    document.getElementById('txtTotal').value=total
+
+  }
+
+  $('#btnGuardar').click(function guardar(){
+
+    $.get(
+      '/solicitudmantenimiento/guardar/',{
+        fecha:document.getElementById('txtFecha').value,
+        cliente:document.getElementById('txtCliente').value,
+        articulo:document.getElementById('txtArticulo').value,
+        falla:document.getElementById('txtFalla').value,
+        observacion:document.getElementById('txtObservacion').value,
+        abono:document.getElementById('txtAbono').value,
+        saldo:document.getElementById('txtSaldo').value,
+        total:document.getElementById('txtTotal').value
+
+
+      });
+      alert("Datos Guardados Correctamente... ")
+      setTimeout("location.href='/solicitudmantenimiento/crear/'",100);
+
+      
+
+
+
+  })
+	
+	</script>
+
+{% endblock js %}

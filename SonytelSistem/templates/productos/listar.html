@@ -1,0 +1,162 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="alert alert-success" role="alert"><h3>PRODUCTOS</h3></div>
+<div class="btn-toolbar" role="toolbar">
+  
+  
+    
+    
+</div>
+</div>
+<br/>
+<span class="label label-default">Buscar</span>
+<div class="well">
+<p>Registro de productos emitidas </p>
+
+
+<div class="row">
+  <div class="col-md-11 col-md-offset-9">
+  <button type="button" class="btn btn-success btn-sm" onclick="ingresarP()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> INGRESAR</button>
+
+</div>
+<div class=" navbar-form  navbar-left form-group col-lg-6">
+  <input type="search" id="txtBuscar" class=" pull-right form-control" autofocus placeholder="Buscar...">
+</div>
+
+    <!-- /.col-lg-6 -->
+    </br>
+    <br/>
+    </br>
+    <br/>
+    </br>
+    <br/>
+   
+	<div id="divTabla" class="table-responsive">
+		<table id = "tblTabla" class="table table-striped table table-bordered table table-condensed table table-hover">
+	        <thead>
+	          <tr>
+	            <td class="success">#</td>
+	            <td class="success">NOMBRE</td>
+	            <td class="success">CANT.</td>
+	            <td class="success">P.U.</td>
+	            <td class="success">E.C.G.</td>
+	            <td class="success">TARIFA IVA</td>
+	            <td class="success">EX.</td>
+	            <td class="success">P.V.P.</td>
+	            <td class="success">TIPO</td>
+	            <td class="success">------</td>
+	            <td class="success">------</td>
+	            
+	          </tr>
+	        </thead>
+	        <tbody >
+	   
+	         
+	          <!-- Aplicadas en las celdas (<td> o <th>) -->
+		          {% for pro in  productos %}
+			          <tr>
+			          	<td >{{pro.id}}</td>
+		          		<td >{{pro.pro_nombre}}</td>
+			            <td >{{pro.pro_cantidad}}</td>
+			            <td >{{pro.pro_precio}}</td>
+			            <td >{{pro.pro_ecg}}</td>
+			            <td >{{pro.pro_tarifa_iva}}</td>
+			            <td >{{pro.pro_ex}}</td>
+			            <td >{{pro.pro_pvp}}</td>
+			            {% for cat in categorias %}
+			            	{% if cat.id == pro.mar_id %}
+			            		<td >{{cat.mar_nombre}}</td>
+			            	{% endif %}
+
+			            
+			            
+			            {% endfor %}
+			            <td ><button class='btn btn-success' id="btnupdate{{pro.id}}" value="{{pro.id}}" onclick='actualizarDatos({{pro.id}})'><span class="glyphicon glyphicon-pencil"></i></button> </td>
+			            <td ><button class='btn btn-success' id="btndelete" value="{{pro.id}}" onclick='eliminarDatos({{pro.id}})'><span class="glyphicon glyphicon-remove"></i></button></td>
+
+			           
+			          	
+			           
+			          </tr>
+		          {% endfor %}
+	      	</tbody>
+		</table>
+	</div>
+    <div id="datos">
+        
+    </div>
+
+
+{% endblock content %}
+
+{% block js %}
+ 	
+<script>
+
+
+		
+		$('#txtBuscar').on('keypress',filtrado);
+		function filtrado(){
+			var nombre = $(this).val();
+			console.log(nombre);
+			$.ajax({
+				data:{'nombre':nombre},
+				url:'/productos/filtrador/',
+				type: 'get',
+
+				success: function(data){
+					document.getElementById('tblTabla').style.display = 'none'
+					var html = '<div id="divTabla" class="table-responsive"><table id = "tblTabla" class="table table-hover"><thead><tr><td class="success">#</td><td class="success">NOMBRE</td><td class="success">CANT.</td><td class="success">PRECIO</td><td class="success">ECG</td><td class="success">TARIFA IVA</td><td class="success">EX.</td><td class="success">P.V.P.</td><td class="success">MARCA</td><td class="success">------</td><td class="success">------</td></tr></thead><tbody >'
+					for(var i = 0; i<data.length ; i++){
+
+						var ident = ''
+						var marca = ''
+
+						{% for product in productos  %}
+							if ('{{product.pro_nombre}}'==data[i].fields.pro_nombre) {
+
+								ident = '{{product.id}}';
+
+							};
+
+							{% for cate in categorias %}
+								{% if product.mar_id == cate.id %}
+									marca = '{{cate.mar_nombre}}';
+								{% endif %}
+							{% endfor %}
+
+						{% endfor %}
+
+						html += '<tr><td>'+ident+'</td><td >'+data[i].fields.pro_nombre+'</td><td >'+data[i].fields.pro_cantidad+'</td><td >'+data[i].fields.pro_precio+'</td><td >'+data[i].fields.pro_ecg+'</td><td >'+data[i].fields.pro_tarifa_iva+'</td><td >'+data[i].fields.pro_ex+'</td><td >'+data[i].fields.pro_pvp+'</td><td >'+marca+'</td>';
+						var botones = "<td ><button class='btn btn-success' id='btnupdate"+ident+"' value="+ident+" onclick='actualizarDatos("+ident+")'><span class='glyphicon glyphicon-pencil'></i></button> </td><td ><button class='btn btn-success' id='btndelete' value="+ident+" onclick='eliminarDatos("+ident+")'><span class='glyphicon glyphicon-remove'></i></button></td></tr>";
+						html +=botones;
+					}
+					
+					var uni='</tbody></table></div>'
+					$('#datos').html(html+uni);
+				}
+	
+	
+	
+			});
+	
+		}
+
+	function actualizarDatos(r){
+		var s = document.getElementById('btnupdate'+r).value
+		setTimeout("location.href='/productos/editar/"+r+"'"+"",10);
+
+	}
+	function eliminarDatos(r){
+		var s = document.getElementById('btnupdate'+r).value
+		setTimeout("location.href='/productos/eliminar/"+r+"'"+"",10);
+
+	}
+	function ingresarP(){
+
+		setTimeout("location.href='/productos/registrarproducto'",10)
+	}
+
+	</script>	
+{% endblock js %}

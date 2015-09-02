@@ -1,0 +1,73 @@
+{%extends 'base.html'%}
+{% block content %}
+
+	<div class="table-responsive">
+		<table class="table table-hover">
+	        <thead>
+	          <tr>
+	            <td class="success">#</td>
+	            <td class="success">CEDULA</td>
+	            <td class="success">NOMBRE</td>
+	            <td class="success">APELLIDO</td>
+	          </tr>
+	        </thead>
+	        <tbody >
+	        
+	         
+	          <!-- Aplicadas en las celdas (<td> o <th>) -->
+		          <tr>
+		            <td >ASDASD.</td>
+		            <td >...ASD</td>
+		            <td >..ASDASD.</td>
+		            <td >..DASDAS.</td>
+		          </tr>
+	      	</tbody>
+		</table>
+	</div>
+
+
+	<select>
+
+	<option>Elige un cliente</option>
+		{% for cliente in clientes %}
+			<option value ="{{cliente.id}}">{{cliente.cli_nombre}}</option>
+		{% endfor %}
+
+
+
+
+	</select>
+<div id="datos">
+	ddd
+</div>
+{% endblock content %}
+
+{% block js %}
+	
+<script>
+		
+	
+		$('select').on('change',inicio);
+		function inicio(){
+			var id = $(this).val();
+			$.ajax({
+				data:{'id':id},
+				url:'/cliente/buscador/',
+				type: 'get',
+				success: function(data){
+					var html = '<div class="table-responsive"><table class="table table-hover"><thead><tr><td class="success">CEDULA</td><td class="success">NOMBRE</td><td class="success">APELLIDO</td><td class="success">TELEFONO</td><td class="success">DIRECCION</td><td class="success">EMAIL</td><td class="success">ESTADO</td><td class="success">CIUDAD</td></tr></thead><tbody >'
+					for(var i = 0; i<data.length ; i++){
+						html += '<tr><td >'+data[i].fields.cli_cedula+'</td><td >'+data[i].fields.cli_nombre+'</td><td >'+data[i].fields.cli_apellido+'</td><td >'+data[i].fields.cli_telefono+'</td><td >'+data[i].fields.cli_direccion+'</td><td >'+data[i].fields.cli_email+'</td><td >'+data[i].fields.cli_estado+'</td><td >'+data[i].fields.ciu+'</td></tr>'
+					}
+					var uni= '</tbody></table></div>'
+					$('#datos').html(html+uni);
+				}
+	
+	
+	
+			});
+	
+		}
+
+	</script>	
+{% endblock js %}
